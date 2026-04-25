@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="card border-secondary mb-4">
+        <div class="card-header">Профиль пользователя</div>
+        <div class="card-body">
+            <h4>{{ profile_user.name }} {{ profile_user.surname }}</h4>
+            <p>Email: {{ profile_user.email }}</p>
+            <p>Position: {{ profile_user.position }}</p>
+            <p>Speciality: {{ profile_user.speciality }}</p>
+            <p>Address: {{ profile_user.address }}</p>
+        </div>
+    </div>
+
+    <h3>Работы пользователя</h3>
+
+    {% if jobs %}
+        {% for job in jobs %}
+            <div class="card mb-3">
+                <div class="card-header">Работа #{{ job.id }}</div>
+                <div class="card-body">
+                    <h5>{{ job.job }}</h5>
+                    <p>Duration: {{ job.work_size }}</p>
+                    <p>Collaborators: {{ job.collaborators }}</p>
+                    <p>
+                        Status:
+                        {% if job.is_finished %}
+                            <span class="badge badge-success">Is finished</span>
+                        {% else %}
+                            <span class="badge badge-warning">Is not finished</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">У пользователя пока нет работ.</div>
+    {% endif %}
+{% endblock %}

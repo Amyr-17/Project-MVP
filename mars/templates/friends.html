@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="mb-3">Мои друзья</h2>
+
+    {% if friends %}
+        <div class="row">
+            {% for friend in friends %}
+                <div class="col-md-4">
+                    <div class="card mb-3 border-info">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ friend.name }} {{ friend.surname }}</h5>
+                            <p class="card-text">Email: {{ friend.email }}</p>
+                            <p class="card-text">Position: {{ friend.position }}</p>
+                            <p class="card-text">Speciality: {{ friend.speciality }}</p>
+
+                            <a class="btn btn-info btn-sm" href="/user/{{ friend.id }}">Профиль и работы</a>
+
+                            <form action="/remove_friend/{{ friend.id }}" method="post" style="display:inline;">
+                                <button class="btn btn-danger btn-sm" type="submit">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Список друзей пока пуст. Перейдите в раздел пользователей и добавьте друзей.
+        </div>
+        <a class="btn btn-primary" href="/users">Найти пользователей</a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="mb-3">Пользователи системы</h2>
+
+    {% if users %}
+        <table class="table table-bordered table-hover">
+            <tr class="thead-light">
+                <th>Пользователь</th>
+                <th>Email</th>
+                <th>Должность</th>
+                <th>Специальность</th>
+                <th>Действия</th>
+            </tr>
+
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.name }} {{ user.surname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.position }}</td>
+                    <td>{{ user.speciality }}</td>
+                    <td>
+                        {% if user.id in friend_ids %}
+                            <a class="btn btn-sm btn-info" href="/user/{{ user.id }}">Посмотреть профиль</a>
+                            <span class="badge badge-success">В друзьях</span>
+                        {% else %}
+                            <form action="/add_friend/{{ user.id }}" method="post" style="display:inline;">
+                                <button class="btn btn-sm btn-success" type="submit">Добавить в друзья</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="alert alert-info">Пока нет других пользователей.</div>
+    {% endif %}
+{% endblock %}
